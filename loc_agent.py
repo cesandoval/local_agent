@@ -1,4 +1,8 @@
-class QuadTree():
+from decodes.core import *
+from decodes.core import dc_base, dc_interval, dc_vec, dc_point  #here we may only import modules that have been loaded before this one.    see core/__init__.py for proper order
+import math
+
+class QuadAgent():
     def __init__ (self, capacity, bounds):
         """ QuadTree constructor.
         
@@ -72,7 +76,7 @@ class QuadTree():
         if self.has_children: return False
         
         sub_bnds = self.bnd//2
-        self.children = [QuadTree(self.cap,sub_bnd) for sub_bnd in sub_bnds]
+        self.children = [QuadAgent(self.cap,sub_bnd) for sub_bnd in sub_bnds]
 
         for pt in self._pts : 
             accepted = False
@@ -130,7 +134,7 @@ class QuadTree():
         
         """
     
-        q = QuadTree(capacity, Bounds.encompass(pts))
+        q = QuadAgent(capacity, Bounds.encompass(pts))
         
         for p in pts : 
             print p
@@ -168,7 +172,7 @@ record (None) Add the Bird's current status to the Bird's history
 """
 A simple Bird class is defined with position, velocity, acceleration vectors, and history.
 """
-class Bird():
+class Loc_Agent():
     
     def __init__(self, pos_start = None, vel_start = None):
         # if there is no starting position:
