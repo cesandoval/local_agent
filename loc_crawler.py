@@ -11,6 +11,7 @@ class Crawler():
         self.state = 'on'
         self.tolerance = tolerance
         self.maxsteps = maxsteps
+        self.climb = climb
      
     def makeDrainCurve(self):
         i = 0
@@ -28,7 +29,7 @@ class Crawler():
         downVect = newFrame.XAxis
         # figure out hw far to rotate it.
         deltaAngle = Rhino.Geometry.Vector3d.VectorAngle( downVect, Rhino.Geometry.Vector3d(0.0, 0.0, -1.0), newFrame )
-        if climb: deltaAngle = Rhino.Geometry.Vector3d.VectorAngle( downVect, Rhino.Geometry.Vector3d(0.0, 0.0, 1.0), newFrame )
+        if self.climb == True: deltaAngle = Rhino.Geometry.Vector3d.VectorAngle( downVect, Rhino.Geometry.Vector3d(0.0, 0.0, 1.0), newFrame )
         # rotate it in the plane
         downVect.Rotate( deltaAngle, newFrame.ZAxis)
         # set the length
@@ -36,7 +37,7 @@ class Crawler():
         spacePoint = Rhino.Geometry.Point3d.Add(self.pos, downVect)
         result, self.u, self.v = self.surface.ClosestPoint(spacePoint)
         out, newPoint, vects = self.surface.Evaluate(self.u, self.v, 0)
-        if climb:
+        if self.climb == True:
             if newPoint.Z <= self.pos.Z: # if higher
                 self.state = 'finished'
         else:

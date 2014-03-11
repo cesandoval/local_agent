@@ -174,7 +174,7 @@ A simple Bird class is defined with position, velocity, acceleration vectors, an
 """
 class Loc_Agent():
     
-    def __init__(self, pos_start = None, vel_start = None):
+    def __init__(self, max_frc, max_vel, rov=None, roc = None, pos_start = None, vel_start = None):
         # if there is no starting position:
         if pos_start is None : 
             # give the Bird a random point
@@ -190,15 +190,21 @@ class Loc_Agent():
         # set the Bird's velocity to the initial velocity
         self.vel = vel_start 
         # set a limit to the Bird's velocity
-        self.max_vel = 3.00
+        self.max_vel = max_vel
         # set the initial acceleration to zero
         self.acl = Vec() 
         # set a limit to the Bird's acceleration
-        self.max_frc = 0.30
+        self.max_frc = max_frc
         # range of vision is the range to which this bird can see other birds
-        self.rov = 40.0
+        if rov == None:
+            self.rov = 40.0
+        else:
+            self.rov = rov
         # range of comfort is the range of comfort with nearby birds
-        self.roc = 15.00
+        if roc == None:
+            self.roc = 15.00
+        else:
+            self.roc = roc
         
         # initalize history lists 
         self.clear_history()
